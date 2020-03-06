@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel = "stylesheet" type = "text/css" href="single/css/single.css"/>
+		<script src="js/jquery-3.1.1.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<script src="js/adapter.js"></script>
+		<script src="js/platform.js"></script>
+		<script src="js/h5splayer.js"></script>
+		<script src="js/h5splayerhelper.js"></script>
+		<!-- <script src="single/js/single.js"></script> -->
+	</head>
+	<body>
+		<div class="styletit">
+			<div class="title">
+				<img src="single/img/h5soconsole.png" />
+			</div>
+			<div class="content">
+				<video class="h5video1" id="h5svideo" autoplay webkit-playsinline playsinline></video>
+				<div class="content_suspend"></div>
+			</div>
+			<div class="enging">
+				<div id="" class="enging_button">
+					<div class="enging_button1">
+						<div>画质</div>
+						<div id="stop" style="margin-top: 180px;"><img src="single/img/zanting.png"/></div>
+					</div>
+					<div class="enging_button2">
+						<div class="enging_button_shang">
+						</div>
+						<div class="enging_button_zy">
+							<img src="single/img/zuo.png"/ class="enging_button_zuo">
+							<img src="single/img/you.png"/ class="enging_button_you">
+						</div>
+						<div class="enging_button_xia">
+						</div>
+					</div>
+					<div class="enging_button3">
+						<div id="enging_button_jia"></div>
+						<div id="enging_button_jian"></div>
+					</div>
+				</div>
+				<!-- <div class="yun" style="color: #f00;">语音</div>  -->
+				<div id="" class="enging_function">
+					<div id="Talkback">对讲</div>
+					<div id="Screenshots">抓图</div>
+					<div id="videotape">录像</div>
+				</div>
+			</div>
+			<div>
+			</div>
+		</div>
+	</body>
+	<script>
+		var strSession = 'c1782caf-b670-42d8-ba90-2244d0b0ee83';
+		if (H5siOS() === true|| H5sSafariBrowser() === true)
+		{
+			$('#h5svideo').prop("controls", true);
+		}
+		
+		var strToken= GetURLParameter("token");
+		if (strToken === undefined)
+		{
+			strToken = 'token1';
+		}
+		var strStream= GetURLParameter("stream");
+		if (strStream === undefined)
+		{
+			strStream = 'main';
+		}
+		$(function(){
+			
+			var conf1 = {
+				videoid:'h5svideo',
+				protocol: window.location.protocol, //'http:' or 'https:'
+				host: window.location.host, //'localhost:8080'
+				rootpath:'/', // '/'
+				token:strToken,
+				streamprofile: strStream, // {string} - stream profile, main/sub or other predefine transcoding profile
+				hlsver:'v1', //v1 is for ts, v2 is for fmp4
+				session:'c1782caf-b670-42d8-ba90-2244d0b0ee83', //session got from login
+				consolelog: 'true' // 'true' or 'false' enable/disable console.log
+			};
+			var rtcws= GetURLParameter("h5splayer");
+			var v1;
+			if(rtcws=="rtc"){
+				console.log("12",rtcws);
+				v1 = new H5sPlayerRTC(conf1);
+			}else if(rtcws=="ws"){
+				console.log("12",rtcws);
+				v1 = new H5sPlayerWS(conf1);
+			}
+			if (GetURLParameter("autoplay") != undefined)
+			{
+				v1.connect();
+				$(".content_suspend").show();
+			}
+			$(".content_suspend").parent().click(function(){
+				
+				console.log("12033",v1);
+				$(".content_suspend").hide();
+				if($(this).children(".h5video1").get(0).paused){
+					if(v1 != null)
+					{
+						v1.disconnect();
+						delete v1;
+						v1 = null;
+					}
+					v1 = new H5sPlayerWS(conf1);
+					v1.connect();
+				}else{
+					v1.disconnect();
+					delete v1;
+					v1 = null;
+					$("#h5video1").get(0).pause();
+					$(".content_suspend").show();
+				}
+			})
+			//对讲 抓图 录像
+			$("#Talkback").on("click",function(){
+				var conf2 = {
+					protocol: window.location.protocol, //http: or https:
+					host: window.location.host, //localhost:8080
+					rootpath:'/', // '/' or window.location.pathname
+					token:strToken,
+					session:strSession //session got from login
+				};
+				var audioback = new H5sPlayerAudBack(conf2);
+				audioback.connect();
+			})
+			$("#Screenshots").on("click",function(){
+				console.log("抓图");
+				var fileName = '1';
+				const date = new Date();
+				fileName = this.currtoken + '_' + date.getFullYear() + '-' + (date.getMonth() + 1)
+							 + '-' + date.getDate() + '-' + date.getHours() + '-' + date.getMinutes() + '-' + date.getSeconds();
+				console.log(fileName);
+				var video = $("#h5svideo").get(0);
+				var w = video.videoWidth;//video.videoWidth * scaleFactor;
+				var h = video.videoHeight;//video.videoHeight * scaleFactor;
+				var canvas = document.createElement('canvas');
+				canvas.width = w;
+				canvas.height = h;
+				var ctx = canvas.getContext('2d');
+				ctx.drawImage(video, 0, 0, w, h);
+				var MIME_TYPE = "image/png";
+				var imgURL = canvas.toDataURL(MIME_TYPE,1.0);
+				// console.log(imgURL);
+	
+				var dlLink = document.createElement('a');
+				dlLink.download = fileName;
+				dlLink.href = imgURL;
+				dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':');
+	
+				document.body.appendChild(dlLink);
+				dlLink.click();
+				document.body.removeChild(dlLink);
+			})
+			$("#videotape").on("click",function(){
+				console.log("录像");
+				var record = "token=" +strToken+ "&duration=300";
+				var url =  "/api/v1/ManualRecordStart?" + record  + "&session="+strSession;
+				$.get(url,function(data,status){
+					console.log("Status: " + status);
+				})
+			})
+			//上下左右加减
+			$("#stop").on("click",function(){
+				console.log("stop")
+				PtzAction('stop');
+			})
+			$(".enging_button_shang").on("click",function(){
+				PtzAction('up');
+				console.log("上")
+			})
+			$(".enging_button_you").on("click",function(){
+				console.log("右")
+				PtzAction('right');
+			})
+			$(".enging_button_xia").on("click",function(){
+				console.log("下")
+				PtzAction('down');
+			})
+			$(".enging_button_zuo").on("click",function(){
+				console.log("左")
+				PtzAction('left');
+			})
+			$("#enging_button_jia").on("click",function(){
+				console.log("zoomin")
+				PtzAction('zoomin');
+			})
+			$("#enging_button_jian").on("click",function(){
+				console.log("zoomout")
+				PtzAction('zoomout');
+			})
+		})
+		function PtzAction(action)
+		{
+			var ptzcmd = "token=" + strToken + "&action=" + action + "&speed=0.5";
+			console.log("ptzcmd", ptzcmd);
+
+			var url =  "/api/v1/Ptz?" + ptzcmd  + "&session="+strSession;
+			$.get(url,function(data,status){
+				console.log("Status: " + status);
+			});
+		}
+	</script>
+</html>

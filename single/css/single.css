@@ -1,0 +1,153 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+html,body{
+	height: 100%;
+	min-height: 1743px;
+}
+.styletit{
+	width: 100%;
+	height: 100%;
+}
+.title{
+	width: 100%;
+	height: 21%;
+	background: url(../img/h5bg.png) no-repeat #4FBAFF 0 -100px;
+	background-size: 100%;
+}
+.title img{
+	width: 40%;
+	margin-top: 15%;
+	margin-left: 10%;
+}
+/* 内容 */
+.content{
+	width: 100%;
+	height: 35%;
+	background: #4FBAFF;
+	position: relative;
+}
+.content video{
+	width: 100%;
+	height: 100%;
+	object-fit: fill;
+}
+.content_suspend{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background: url(../img/you.png) no-repeat center;
+	top: 0;
+}
+/* 结尾 */
+.enging{
+	width: 100%;
+	height: 44%;
+	background:#FAFAFA;
+}
+.enging_button{
+	width: 100%;
+	height: 80%;
+	display: flex;
+	justify-content: space-between;
+	padding: 40px 20px;
+	box-sizing: border-box;
+}
+.enging_button .enging_button1{
+	width: 25%;
+	text-align: center;
+	height: 100%;
+	font-size:32px;
+	font-family:PingFang SC;
+	font-weight:600;
+	color:rgba(80,146,238,1);
+}
+.enging_button .enging_button2{
+	width: 50%;
+	/* height: 74%; */
+	height: 470px;
+	text-align: center;
+	background: url(../img/buttonyuan.png) no-repeat center;
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-content: space-around;
+}
+.enging_button_shang{
+	background: url(../img/shang.png) no-repeat center;
+	width: 100%;
+	height: 10%;
+	/* top: 30px; */
+}
+.enging_button_zy{
+	width: 100%;
+	height: 20%;
+	display: flex;
+	justify-content: space-between;
+	padding: 0 34px;
+}
+.enging_button_xia{
+	background: url(../img/xia.png) no-repeat center;
+	width: 100%;
+	height: 10%;
+	/* top: 30px; */
+}
+.enging_button .enging_button3{
+	width: 25%;
+	height: 76%;
+	text-align: center;
+	background: url(../img/juxing.png) no-repeat center;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-content: space-around;
+}
+.enging_button .enging_button3 div:nth-child(1){
+	width: 100%;
+	height: 15%;
+	background: url(../img/jia.png) no-repeat center;
+}
+.enging_button .enging_button3 div:nth-child(2){
+	width: 100%;
+	height: 15%;
+	background: url(../img/jian.png) no-repeat center;
+}
+
+.enging_function{
+	width: 100%;
+	height: 20%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	
+}
+.enging_function div{
+	width: 30%;
+	height: 70%;
+	line-height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	flex-direction: column;
+	border-radius: 10px;
+	font-size:30px;
+	font-family:PingFang SC;
+	font-weight:600;
+	color:rgba(0,0,0,0.4);
+	padding-left: 10%;
+	box-sizing: border-box;
+}
+.enging_function div:nth-child(1){
+	background: url(../img/duijiang.png) no-repeat  #FFFFFF 20% 50%;
+	background-size: 20%;
+}
+.enging_function div:nth-child(2){
+	background: url(../img/jietu.png) no-repeat  #FFFFFF 20% 50%;
+	background-size: 20%;
+}
+.enging_function div:nth-child(3){
+	background: url(../img/luxiang.png) no-repeat  #FFFFFF 20% 50%;
+	background-size: 20%;
+}
