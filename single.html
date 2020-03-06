@@ -98,8 +98,6 @@
 				$(".content_suspend").show();
 			}
 			$(".content_suspend").parent().click(function(){
-				
-				console.log("12033",v1);
 				$(".content_suspend").hide();
 				if($(this).children(".h5video1").get(0).paused){
 					if(v1 != null)
@@ -108,7 +106,11 @@
 						delete v1;
 						v1 = null;
 					}
-					v1 = new H5sPlayerWS(conf1);
+					if(rtcws=="rtc"){
+						v1 = new H5sPlayerRTC(conf1);
+					}else if(rtcws=="ws"){
+						v1 = new H5sPlayerWS(conf1);
+					}
 					v1.connect();
 				}else{
 					v1.disconnect();
