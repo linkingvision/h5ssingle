@@ -74,7 +74,13 @@ html,body{
 	flex-wrap: wrap;
 	justify-content: space-around;
 	align-content: space-around;
-}
+	-webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -khtml-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+	 user-select:none;
+ }
 .enging_button_shang{
 	background: url(../img/shang.png) no-repeat center;
 	width: 100%;
@@ -87,6 +93,16 @@ html,body{
 	display: flex;
 	justify-content: space-between;
 	padding: 0 34px;
+}
+.enging_button_zuo{
+	background: url(../img/zuo.png) no-repeat center;
+	width: 20%;
+	height: 100%;
+}
+.enging_button_you{
+	background: url(../img/you.png) no-repeat center;
+	width: 20%;
+	height: 100%;
 }
 .enging_button_xia{
 	background: url(../img/xia.png) no-repeat center;

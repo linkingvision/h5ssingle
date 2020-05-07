@@ -24,15 +24,18 @@
 			<div class="enging">
 				<div id="" class="enging_button">
 					<div class="enging_button1">
-						<div>画质</div>
-						<div id="stop" style="margin-top: 180px;"><img src="single/img/zanting.png"/></div>
+						<div class="quality">画质</div>
 					</div>
 					<div class="enging_button2">
 						<div class="enging_button_shang">
 						</div>
 						<div class="enging_button_zy">
-							<img src="single/img/zuo.png"/ class="enging_button_zuo">
-							<img src="single/img/you.png"/ class="enging_button_you">
+							<div class="enging_button_zuo">
+							</div>
+							<div class="enging_button_you">
+							</div>
+							<!-- <img src="single/img/zuo.png" class="enging_button_zuo"/>
+							<img src="single/img/you.png" class="enging_button_you"/> -->
 						</div>
 						<div class="enging_button_xia">
 						</div>
@@ -169,33 +172,90 @@
 				})
 			})
 			//上下左右加减
-			$("#stop").on("click",function(){
-				console.log("stop")
-				PtzAction('stop');
-			})
-			$(".enging_button_shang").on("click",function(){
+			// $("#stop").on("click",function(){
+			// 	console.log("stop")
+			// 	PtzAction('stop');
+			// })
+		    //  上
+			$(".enging_button_shang").on("touchstart",function(){
 				PtzAction('up');
-				console.log("上")
+				console.log("touchstart")
+				event.stopPropagation();
+                return false;
 			})
-			$(".enging_button_you").on("click",function(){
+			$(".enging_button_shang").on("touchend",function(){
+				PtzAction('stop');
+				console.log("touchend")
+		        event.stopPropagation();
+                return false;
+			})
+			// 右
+			$(".enging_button_you").on("touchstart",function(){
 				console.log("右")
 				PtzAction('right');
+				event.stopPropagation();
+				event.preventDefault()
+                return false;
 			})
-			$(".enging_button_xia").on("click",function(){
+			$(".enging_button_you").on("touchend",function(){
+				PtzAction('stop');
+				console.log("touchend")
+				event.stopPropagation();
+				event.preventDefault()
+                return false;
+			})
+			// 下
+			$(".enging_button_xia").on("touchstart",function(){
 				console.log("下")
 				PtzAction('down');
+		        event.stopPropagation();
+                return false
 			})
-			$(".enging_button_zuo").on("click",function(){
+			$(".enging_button_xia").on("touchend",function(){
+				PtzAction('stop');
+				console.log("touchend")
+		        event.stopPropagation();
+                return false;
+			})
+			// 左
+			$(".enging_button_zuo").on("touchstart",function(){
 				console.log("左")
 				PtzAction('left');
+				event.stopPropagation();
+				event.preventDefault()
+                return false
 			})
-			$("#enging_button_jia").on("click",function(){
+			$(".enging_button_zuo").on("touchend",function(){
+				PtzAction('stop');
+				console.log("touchend")
+				event.stopPropagation();
+				event.preventDefault()
+                return false;
+			})
+		
+			// 拉近 拉远
+			$("#enging_button_jia").on("touchstart",function(){
 				console.log("zoomin")
 				PtzAction('zoomin');
+				event.stopPropagation();
+                return false
 			})
-			$("#enging_button_jian").on("click",function(){
+			$("#enging_button_jia").on("touchend",function(){
+				PtzAction('stop');
+				event.stopPropagation();
+                return false;
+			})
+			// 拉远
+			$("#enging_button_jian").on("touchstart",function(){
 				console.log("zoomout")
 				PtzAction('zoomout');
+				event.stopPropagation();
+                return false;
+			})
+			$("#enging_button_jian").on("touchend",function(){
+				PtzAction('stop');
+				event.stopPropagation();
+                return false;
 			})
 		})
 		function PtzAction(action)
