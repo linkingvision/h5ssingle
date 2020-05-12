@@ -167,3 +167,43 @@ html,body{
 	background: url(../img/luxiang.png) no-repeat  #FFFFFF 20% 50%;
 	background-size: 20%;
 }
+/*  */
+.slider{
+	 margin-top: 80px;
+	 position: relative;
+}
+.slider label{
+	 position: absolute;
+	 right: 20px;
+}
+.slider input[type=range][orient=vertical]{
+	 writing-mode: bt-lr; /* IE */
+	 outline: 0;
+	 -webkit-appearance:slider-vertical;
+	 box-shadow: 0px 2px 10px 25px #8DB8F3 inset,
+                 0 0px 1px rgba(0, 0, 0, 1) inset;; /*添加底部阴影*/
+     margin-top: 2px;
+     border-radius: 15px;
+	 width: 20px;
+	 height: 280px;
+	 background-color: #4FBAFF !important;
+	 padding: 0 5px;
+	} 
+.slider input[type=range][orient=vertical]::-webkit-slider-thumb {
+	-webkit-appearance:none;
+	outline: none;
+	height: 30px;
+	width: 30px;
+	/* margin-left:  -5px; 使滑块超出轨道部分的偏移量相等 */
+	/* border-radius: 50%; */
+	box-shadow: 25px 25px 25px 25px #1B71E9 inset,
+	            0 0px 1px rgba(0, 0, 0, 0.986) inset;; /*添加底部阴影*/
+	border: solid 20px #1B71E9;
+	cursor: default;
+	top: 1px;
+    /* background: none repeat scroll 0 0 #777; */
+	border-radius: 5px;
+	
+  }
+
+

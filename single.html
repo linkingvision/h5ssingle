@@ -6,7 +6,7 @@
 		<link rel = "stylesheet" type = "text/css" href="single/css/single.css"/>
 		<script src="js/jquery-3.1.1.js"></script>
 		<script src="js/bootstrap.js"></script>
-		<script src="js/adapter.js"></script>
+	    <script src="js/adapter.js"></script>
 		<script src="js/platform.js"></script>
 		<script src="js/h5splayer.js"></script>
 		<script src="js/h5splayerhelper.js"></script>
@@ -25,7 +25,12 @@
 				<div id="" class="enging_button">
 					<div class="enging_button1">
 						<div class="quality">画质</div>
+						<div class="slider">
+							<label><span id='slider-value'>0.5x</span></label>
+							<input type="range" orient="vertical" class="ne-range" name="slider" min="0" max="1" step="0.1" id="slider" value="0.5" oninput="change()" onchange="change()"/>
+						</div>
 					</div>
+					
 					<div class="enging_button2">
 						<div class="enging_button_shang">
 						</div>
@@ -54,11 +59,30 @@
 			</div>
 			<div>
 			</div>
-		</div>
+        </div>
 	</body>
-	<script>
+	<script type="text/javascript">
 		var strSession = 'c1782caf-b670-42d8-ba90-2244d0b0ee83';
-		if (H5siOS() === true|| H5sSafariBrowser() === true)
+		var slider = document.getElementById('slider');
+		var sliderValue = document.getElementById('slider-value');
+		var sliderinputvalue=sliderValue.innerHTML
+		console.log(sliderinputvalue)
+		console.log(sliderValue.innerHTML)  
+		console.log(slider.value)   
+	    // window.onload = function (){
+        //        slider.addEventListener('input', function(e) {
+		// 	   sliderValue.textContent = e.target.value +'x';
+		// 	  }); 
+		// 	 }
+		function change(){
+		  var inputvalue = document.getElementById('slider').value;
+		  console.log(inputvalue )
+		  window.inputvalue=inputvalue
+		  document.getElementById('slider-value').innerHTML = inputvalue+'x';
+		}
+		 
+		 
+     if (H5siOS() === true|| H5sSafariBrowser() === true)
 		{
 			$('#h5svideo').prop("controls", true);
 		}
@@ -93,7 +117,7 @@
 				v1 = new H5sPlayerRTC(conf1);
 			}else if(rtcws=="ws"){
 				console.log("12",rtcws);
-				v1 = new H5sPlayerWS(conf1);
+                v1 = new H5sPlayerWS(conf1);
 			}
 			if (GetURLParameter("autoplay") != undefined)
 			{
@@ -123,7 +147,8 @@
 					$(".content_suspend").show();
 				}
 			})
-			//对讲 抓图 录像
+		
+		  //对讲 抓图 录像
 			$("#Talkback").on("click",function(){
 				var conf2 = {
 					protocol: window.location.protocol, //http: or https:
@@ -171,14 +196,20 @@
 					console.log("Status: " + status);
 				})
 			})
-			//上下左右加减
-			// $("#stop").on("click",function(){
-			// 	console.log("stop")
-			// 	PtzAction('stop');
-			// })
+			// 阻止额外默认事件
+			$(".enging_button2").on("touchstart",function(){
+				event.stopPropagation();
+				event.preventDefault()
+                return false;
+			}) 
+			$(".enging_button2").on("touchend",function(){
+				event.stopPropagation();
+				event.preventDefault()
+                return false;
+			}) 
 		    //  上
 			$(".enging_button_shang").on("touchstart",function(){
-				PtzAction('up');
+                PtzAction('up');
 				console.log("touchstart")
 				event.stopPropagation();
                 return false;
@@ -208,6 +239,7 @@
 			$(".enging_button_xia").on("touchstart",function(){
 				console.log("下")
 				PtzAction('down');
+				console.log(PtzAction('down'))
 		        event.stopPropagation();
                 return false
 			})
@@ -258,12 +290,12 @@
                 return false;
 			})
 		})
-		function PtzAction(action)
-		{
-			var ptzcmd = "token=" + strToken + "&action=" + action + "&speed=0.5";
+		function PtzAction(action,sliderinputvalue)
+		{   change()
+			console.log(inputvalue)
+		    var ptzcmd = "token=" + strToken + "&action=" + action + "&speed="+inputvalue+'';
 			console.log("ptzcmd", ptzcmd);
-
-			var url =  "/api/v1/Ptz?" + ptzcmd  + "&session="+strSession;
+            var url =  "/api/v1/Ptz?" + ptzcmd  + "&session="+strSession;
 			$.get(url,function(data,status){
 				console.log("Status: " + status);
 			});
