@@ -25,10 +25,12 @@
 				<div id="" class="enging_button">
 					<div class="enging_button1">
 						<div class="quality">画质</div>
+						<div class="sliderleft"></div>
 						<div class="slider">
 							<label><span id='slider-value'>0.5x</span></label>
 							<input type="range" orient="vertical" class="ne-range" name="slider" min="0" max="1" step="0.1" id="slider" value="0.5" oninput="change()" onchange="change()"/>
 						</div>
+						<div class="sliderright"></div>
 					</div>
 					
 					<div class="enging_button2">
@@ -207,7 +209,28 @@
 				event.preventDefault()
                 return false;
 			}) 
-		    //  上
+			// 阻止额外默认事件
+			$(".enging_button1 .sliderleft").on("touchstart",function(){
+				event.stopPropagation();
+				event.preventDefault()
+                return false;
+			}) 
+			$(".enging_button1 .sliderleft").on("touchend",function(){
+				event.stopPropagation();
+				event.preventDefault()
+                return false;
+			}) 
+			$(".enging_button1 .sliderright").on("touchstart",function(){
+				event.stopPropagation();
+				event.preventDefault()
+                return false;
+			}) 
+			$(".enging_button1 .sliderright").on("touchend",function(){
+				event.stopPropagation();
+				event.preventDefault()
+                return false;
+			}) 
+		   //  上
 			$(".enging_button_shang").on("touchstart",function(){
                 PtzAction('up');
 				console.log("touchstart")

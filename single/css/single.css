@@ -62,6 +62,7 @@ html,body{
 	font-family:PingFang SC;
 	font-weight:600;
 	color:rgba(80,146,238,1);
+	position: relative;
 }
 .enging_button .enging_button2{
 	width: 50%;
@@ -169,23 +170,40 @@ html,body{
 }
 /*  */
 .slider{
-	 margin-top: 80px;
-	 position: relative;
+	display: inline-block;
+	/* width: 33.33%; */
+	position: relative;
+    -webkit-touch-callout:none;
+	-webkit-user-select:none;
+	-khtml-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+}
+.sliderleft{
+  display: inline-block;
+  width: 40%;
+  height: 70%;
+}
+.sliderright{	
+  display: inline-block;
+  width: 30%;
+  height:50%;
 }
 .slider label{
 	 position: absolute;
-	 right: 20px;
+	 left: 60px;
 }
 .slider input[type=range][orient=vertical]{
 	 writing-mode: bt-lr; /* IE */
 	 outline: 0;
 	 -webkit-appearance:slider-vertical;
 	 box-shadow: 0px 2px 10px 25px #8DB8F3 inset,
-                 0 0px 1px rgba(0, 0, 0, 1) inset;; /*添加底部阴影*/
+                 0 0px 1px rgba(0, 0, 0, 1) inset; /*添加底部阴影*/
      margin-top: 2px;
-     border-radius: 15px;
-	 width: 20px;
-	 height: 280px;
+     border-radius: 20px;
+	 width: 35px;
+	 height: 300px;
 	 background-color: #4FBAFF !important;
 	 padding: 0 5px;
 	} 
@@ -194,16 +212,23 @@ html,body{
 	outline: none;
 	height: 30px;
 	width: 30px;
-	/* margin-left:  -5px; 使滑块超出轨道部分的偏移量相等 */
-	/* border-radius: 50%; */
+	margin-left:  -10px; 
+	border-radius: 50px;
 	box-shadow: 25px 25px 25px 25px #1B71E9 inset,
 	            0 0px 1px rgba(0, 0, 0, 0.986) inset;; /*添加底部阴影*/
-	border: solid 20px #1B71E9;
+	border: solid 35px #1B71E9;
 	cursor: default;
 	top: 1px;
     /* background: none repeat scroll 0 0 #777; */
 	border-radius: 5px;
 	
   }
+  input[type=range]::-webkit-slider-runnable-track {
+	height: 15px;
+	width: 50px;
+    border-radius: 20px; /*将轨道设为圆角的*/
+	/* box-shadow: 0 1px 1px #4FBAFF, inset 0 .12em .12em #4FBAFF; 轨道内置阴影效果 */
+	background-color: #4FBAFF;
+}
 
 
