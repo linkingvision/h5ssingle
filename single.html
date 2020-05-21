@@ -68,6 +68,7 @@
 		var slider = document.getElementById('slider');
 		var sliderValue = document.getElementById('slider-value');
 		var sliderinputvalue=sliderValue.innerHTML
+		var inputvalue=''
 		console.log(sliderinputvalue)
 		console.log(sliderValue.innerHTML)  
 		console.log(slider.value)   
@@ -235,14 +236,17 @@
                 PtzAction('up');
 				console.log("touchstart")
 				event.stopPropagation();
+				event.preventDefault()
                 return false;
 			})
 			$(".enging_button_shang").on("touchend",function(){
 				PtzAction('stop');
 				console.log("touchend")
 		        event.stopPropagation();
+				event.preventDefault()
                 return false;
 			})
+		
 			// 右
 			$(".enging_button_you").on("touchstart",function(){
 				console.log("右")
@@ -258,20 +262,36 @@
 				event.preventDefault()
                 return false;
 			})
+		    
+			var x,y,a_x,b_y
 			// 下
-			$(".enging_button_xia").on("touchstart",function(){
-				console.log("下")
-				PtzAction('down');
-				console.log(PtzAction('down'))
-		        event.stopPropagation();
-                return false
-			})
-			$(".enging_button_xia").on("touchend",function(){
+		   document.querySelector('.enging_button_xia').addEventListener("touchstart",function(evt){
+				var touch=evt.touches[0];
+				x=parseInt(touch.pageX),
+				y=parseInt(touch.pageY);
+				a_x=x,
+				b_y=y;
+				PtzAction('down');		
+				},false)
+		    document.querySelector('.enging_button_xia').addEventListener("touchmove",function(evt){
+				evt.preventDefault();
+				evt.stopPropagation();
+				var touch=evt.touches[0];
+				a_x=parseInt(touch.pageX),
+                b_y=parseInt(touch.pageY);
+			},false)
+		    document.querySelector('.enging_button_xia').addEventListener("touchend",function(evt){
 				PtzAction('stop');
-				console.log("touchend")
-		        event.stopPropagation();
-                return false;
-			})
+				var x_x=a_x-x;
+                var y_y=b_y-y;
+				if(y_y>0||y_y<0){
+					PtzAction('stop');
+				}
+				if(X_X>0||X_X<0){
+					PtzAction('stop');
+				}
+				PtzAction('stop');	
+		    },false)
 			// 左
 			$(".enging_button_zuo").on("touchstart",function(){
 				console.log("左")
@@ -293,18 +313,22 @@
 				console.log("zoomin")
 				PtzAction('zoomin');
 				event.stopPropagation();
+				event.preventDefault()
                 return false
 			})
 			$("#enging_button_jia").on("touchend",function(){
 				PtzAction('stop');
 				event.stopPropagation();
+				event.preventDefault()
                 return false;
 			})
+		
 			// 拉远
 			$("#enging_button_jian").on("touchstart",function(){
 				console.log("zoomout")
 				PtzAction('zoomout');
 				event.stopPropagation();
+				event.preventDefault()
                 return false;
 			})
 			$("#enging_button_jian").on("touchend",function(){
@@ -313,10 +337,10 @@
                 return false;
 			})
 		})
-		function PtzAction(action,sliderinputvalue)
-		{   change()
-			console.log(inputvalue)
-		    var ptzcmd = "token=" + strToken + "&action=" + action + "&speed="+inputvalue+'';
+	  
+		function PtzAction(action)
+		 {  
+            var ptzcmd = "token=" + strToken + "&action=" + action + "&speed="+inputvalue+'';
 			console.log("ptzcmd", ptzcmd);
             var url =  "/api/v1/Ptz?" + ptzcmd  + "&session="+strSession;
 			$.get(url,function(data,status){
