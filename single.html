@@ -22,6 +22,7 @@
 				<div class="content_suspend"></div>
 				<div class="content_start"></div>
 				<div class="content_stop"></div>
+				<div class="screenshot"></div>
 				<div class="being" id="beings" style="display: none;"></div>
 			</div>
 			<div class="enging">
@@ -218,15 +219,16 @@
 				})
 			})
 			$("#Screenshots").on("click",function(){
+				var Screen=document.getElementsByClassName('screenshot')
+				fadeIn(Screen,100)
+				   setTimeout(function(){
+						fadeOut(Screen,100) 
+					},2000)
                 var record = "token=" +strToken+ "&duration=300";
 				var url =  "/api/v1/Snapshot?" + record  + "&session="+strSession;
 				console.log("抓图");
-			    $.get(url,function(data){
+				$.get(url,function(data){
 					console.log("Status: " + status);
-					if (data.bStatus == true)
-                  {
-                    alert("Snapshot successfully")
-				   } 
 				})
 			 })
 			
