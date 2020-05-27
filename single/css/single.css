@@ -28,6 +28,15 @@ html,body{
 	background: #4FBAFF;
 	position: relative;
 }
+.being{
+	width: 20px;
+	height: 20px;
+	background-color: red;
+	position: absolute;
+	top:10px;
+	right: 10px;
+	border-radius:50%;
+}
 .content video{
 	width: 100%;
 	height: 100%;
@@ -39,6 +48,22 @@ html,body{
 	position: absolute;
 	background: url(../img/you.png) no-repeat center;
 	top: 0;
+}
+.content_start{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background: url(../img/luxiangkaishi.png) no-repeat center;
+	top: 0;
+	opacity:0
+}
+.content_stop{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background: url(../img/luxangstop.png) no-repeat center;
+	top: 0;
+	opacity:0
 }
 /* 结尾 */
 .enging{
@@ -107,7 +132,7 @@ html,body{
 }
 .enging_button_xia{
 	background: url(../img/xia.png) no-repeat center;
-	width: 100%;
+	width: 20%;
 	height: 10%;
 	/* top: 30px; */
 }
@@ -156,15 +181,15 @@ html,body{
 	padding-left: 10%;
 	box-sizing: border-box;
 }
-.enging_function div:nth-child(1){
-	background: url(../img/duijiang.png) no-repeat  #FFFFFF 20% 50%;
+.enging_function div:nth-child(3){
+	background: url(../img/stop.png) no-repeat  #FFFFFF 20% 50%;
 	background-size: 20%;
 }
-.enging_function div:nth-child(2){
+.enging_function div:nth-child(1){
 	background: url(../img/jietu.png) no-repeat  #FFFFFF 20% 50%;
 	background-size: 20%;
 }
-.enging_function div:nth-child(3){
+.enging_function div:nth-child(2){
 	background: url(../img/luxiang.png) no-repeat  #FFFFFF 20% 50%;
 	background-size: 20%;
 }
@@ -212,7 +237,7 @@ html,body{
 	outline: none;
 	height: 30px;
 	width: 30px;
-	margin-left:  -10px; 
+	margin-left:  -10px !important; 
 	border-radius: 50px;
 	box-shadow: 25px 25px 25px 25px #1B71E9 inset,
 	            0 0px 1px rgba(0, 0, 0, 0.986) inset;; /*添加底部阴影*/

@@ -20,6 +20,9 @@
 			<div class="content">
 				<video class="h5video1" id="h5svideo" autoplay webkit-playsinline playsinline></video>
 				<div class="content_suspend"></div>
+				<div class="content_start"></div>
+				<div class="content_stop"></div>
+				<div class="being" id="beings" style="display: none;"></div>
 			</div>
 			<div class="enging">
 				<div id="" class="enging_button">
@@ -54,9 +57,10 @@
 				</div>
 				<!-- <div class="yun" style="color: #f00;">语音</div>  -->
 				<div id="" class="enging_function">
-					<div id="Talkback">对讲</div>
 					<div id="Screenshots">抓图</div>
-					<div id="videotape">录像</div>
+					<div id="Start">开始</div>
+					<div id="videotape">停止</div>
+					
 				</div>
 			</div>
 			<div>
@@ -150,55 +154,82 @@
 					$(".content_suspend").show();
 				}
 			})
-		
+		 
+			//淡入效果(含淡入到指定透明度)
+			function fadeIn(element, speed){
+				for(var i=0;i<element.length;i++){
+					if(element[0].style.opacity !=1){
+					var speed = speed || 30 ;
+					var num = 0;
+					var st = setInterval(function(){
+							num++;
+							element[0].style.opacity = num/10;
+							if(num>=10)  {  clearInterval(st); }
+							},speed);
+						}
+			   }
+		     }
+			
+			//淡出效果(含淡出到指定透明度)
+			function fadeOut(element,speed){
+				var speed = speed || 30 ;
+				var num = 10;
+				var st = setInterval(function(){
+				num--;
+				element[0].style.opacity = num / 10 ;
+				if(num<=0)  {   clearInterval(st);  }
+				},speed);
+		      }
+			    var timer=null;
 		  //对讲 抓图 录像
-			$("#Talkback").on("click",function(){
-				var conf2 = {
-					protocol: window.location.protocol, //http: or https:
-					host: window.location.host, //localhost:8080
-					rootpath:'/', // '/' or window.location.pathname
-					token:strToken,
-					session:strSession //session got from login
-				};
-				var audioback = new H5sPlayerAudBack(conf2);
-				audioback.connect();
-			})
-			$("#Screenshots").on("click",function(){
-				console.log("抓图");
-				var fileName = '1';
-				const date = new Date();
-				fileName = this.currtoken + '_' + date.getFullYear() + '-' + (date.getMonth() + 1)
-							 + '-' + date.getDate() + '-' + date.getHours() + '-' + date.getMinutes() + '-' + date.getSeconds();
-				console.log(fileName);
-				var video = $("#h5svideo").get(0);
-				var w = video.videoWidth;//video.videoWidth * scaleFactor;
-				var h = video.videoHeight;//video.videoHeight * scaleFactor;
-				var canvas = document.createElement('canvas');
-				canvas.width = w;
-				canvas.height = h;
-				var ctx = canvas.getContext('2d');
-				ctx.drawImage(video, 0, 0, w, h);
-				var MIME_TYPE = "image/png";
-				var imgURL = canvas.toDataURL(MIME_TYPE,1.0);
-				// console.log(imgURL);
-	
-				var dlLink = document.createElement('a');
-				dlLink.download = fileName;
-				dlLink.href = imgURL;
-				dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':');
-	
-				document.body.appendChild(dlLink);
-				dlLink.click();
-				document.body.removeChild(dlLink);
-			})
-			$("#videotape").on("click",function(){
-				console.log("录像");
+			$("#Start").on("click",function(){
+				var el=document.getElementsByClassName('content_start')
+				var be=document.getElementById('beings')
+		        fadeIn(el,100)
+				  setTimeout(function(){
+					  fadeOut(el,100) 
+				  },2000)
 				var record = "token=" +strToken+ "&duration=300";
 				var url =  "/api/v1/ManualRecordStart?" + record  + "&session="+strSession;
+				$.get(url,function(data){
+				   if(data.bStatus==true){
+					clearInterval(timer);
+				        var i=0 
+						timer=setInterval(function(){ 
+					     be.style.display=i++%2?'none':'';    
+						 i>10000&&clearInterval(timer); 
+					},800); 
+					}
+				})
+			})
+			$("#videotape").on("click",function(){
+			   var ele=document.getElementsByClassName('content_stop')
+			   var be=document.getElementById('beings')
+			       clearInterval(timer);
+				   be.style.display='none'
+				   fadeIn(ele,100)
+				   setTimeout(function(){
+						fadeOut(ele,100) 
+					},2000)
+				var record = "token=" +strToken+ "&duration=300";
+				var url =  "/api/v1/ManualRecordStop?" + record  + "&session="+strSession;
 				$.get(url,function(data,status){
 					console.log("Status: " + status);
 				})
 			})
+			$("#Screenshots").on("click",function(){
+                var record = "token=" +strToken+ "&duration=300";
+				var url =  "/api/v1/Snapshot?" + record  + "&session="+strSession;
+				console.log("抓图");
+			    $.get(url,function(data){
+					console.log("Status: " + status);
+					if (data.bStatus == true)
+                  {
+                    alert("Snapshot successfully")
+				   } 
+				})
+			 })
+			
 			// 阻止额外默认事件
 			$(".enging_button2").on("touchstart",function(){
 				event.stopPropagation();
@@ -290,7 +321,7 @@
 				if(X_X>0||X_X<0){
 					PtzAction('stop');
 				}
-				PtzAction('stop');	
+				// PtzAction('stop');	
 		    },false)
 			// 左
 			$(".enging_button_zuo").on("touchstart",function(){
