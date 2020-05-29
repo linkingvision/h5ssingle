@@ -88,6 +88,7 @@
 		  window.inputvalue=inputvalue
 		  document.getElementById('slider-value').innerHTML = inputvalue+'x';
 		}
+		change()
 		 
 		 
      if (H5siOS() === true|| H5sSafariBrowser() === true)
@@ -373,7 +374,7 @@
 	  
 		function PtzAction(action)
 		 {  
-            var ptzcmd = "token=" + strToken + "&action=" + action + "&speed="+inputvalue+'';
+		    var ptzcmd = "token=" + strToken + "&action=" + action + "&speed="+inputvalue+'';
 			console.log("ptzcmd", ptzcmd);
             var url =  "/api/v1/Ptz?" + ptzcmd  + "&session="+strSession;
 			$.get(url,function(data,status){
